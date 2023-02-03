@@ -4,6 +4,8 @@ export interface Category {
     description: string;
 }
 
+export type ApiCategory = Omit<Category, 'description'>;
+
 export interface Place {
     id: string;
     name: string;

@@ -1,7 +1,7 @@
 import express from 'express';
 import {randomUUID} from "crypto";
 import fileDb from "../fileDb";
-import {Category} from "../types";
+import {ApiCategory, Category} from "../types";
 
 const categoriesRouter = express.Router();
 
@@ -20,5 +20,37 @@ categoriesRouter.post('/', async (req, res) => {
 
     res.send(saveCategory);
 });
+
+categoriesRouter.get('/', async (req, res) => {
+    const categories = await fileDb.getCategories();
+
+    if (!categories) {
+        return res.sendStatus(404);
+    }
+    
+    const newCategory: ApiCategory[] = categories.map((item) => {
+        return {
+            id: item.id,
+            name: item.name,
+        }
+    });
+    res.send(newCategory);
+});
+
+categoriesRouter.get('/:id', async (req, res) => {
+    const categories = await fileDb.getCategories();
+    const category = categories.find(category => category.id === req.params.id);
+
+    if (!category) {
+        return res.sendStatus(404);
+    }
+
+    res.send(category);
+});
+
+categoriesRouter.delete('/:id', async (req, res) => {
+    const categories = await fileDb.removeCategoryById(req.params.id);
+    res.send(categories);
+})
 
 export default categoriesRouter;

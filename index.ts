@@ -8,7 +8,6 @@ const port = 8000;
 app.use(express.json());
 app.use('/categories', categoriesRouter);
 
-
 const run = async () => {
     await fileDb.init();
     app.listen(port, () => {
