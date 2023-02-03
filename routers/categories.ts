@@ -27,14 +27,14 @@ categoriesRouter.get('/', async (req, res) => {
     if (!categories) {
         return res.sendStatus(404);
     }
-    
-    const newCategory: ApiCategory[] = categories.map((item) => {
+
+    const clearCategory: ApiCategory[] = categories.map((category) => {
         return {
-            id: item.id,
-            name: item.name,
+            id: category.id,
+            name: category.name,
         }
     });
-    res.send(newCategory);
+    res.send(clearCategory);
 });
 
 categoriesRouter.get('/:id', async (req, res) => {

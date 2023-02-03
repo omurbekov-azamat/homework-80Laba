@@ -1,4 +1,4 @@
-import {Category, Shop} from "./types";
+import {Category, Place, Shop} from "./types";
 import {promises as fs} from "fs";
 
 const filename = './db.json';
@@ -21,13 +21,13 @@ const fileDb = {
             }
         }
     },
-    async getCategories() {
-        return data.categories;
-    },
     async addCategory(category: Category) {
         data.categories.push(category);
         await this.save();
         return category;
+    },
+    async getCategories() {
+        return data.categories;
     },
     async removeCategoryById(id: string) {
         await fs.unlink(filename);
@@ -39,6 +39,26 @@ const fileDb = {
         } else {
             await fs.writeFile(filename, JSON.stringify(data));
             return 'There is no category with that id';
+        }
+    },
+    async addPlace(place: Place) {
+        data.places.push(place);
+        await this.save();
+        return place;
+    },
+    async getPlaces() {
+      return data.places;
+    },
+    async deletePlaceById(id: string) {
+        await fs.unlink(filename);
+        const place = data.places.find(place => place.id === id);
+        if (place) {
+            data.places = data.places.filter((item: Place) => item.id !== id);
+            await fs.writeFile(filename, JSON.stringify(data));
+            return 'Deletion place was successful';
+        } else {
+            await fs.writeFile(filename, JSON.stringify(data));
+            return 'There is no place with that id';
         }
     },
     async save() {

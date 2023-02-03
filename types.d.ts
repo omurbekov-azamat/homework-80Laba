@@ -12,6 +12,8 @@ export interface Place {
     description: string;
 }
 
+export type ApiPlace = Omit<Place, 'description'>;
+
 export interface Item {
     id: string;
     category_id: string;
