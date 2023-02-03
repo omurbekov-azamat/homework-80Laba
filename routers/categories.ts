@@ -42,15 +42,14 @@ categoriesRouter.get('/:id', async (req, res) => {
     const category = categories.find(category => category.id === req.params.id);
 
     if (!category) {
-        return res.sendStatus(404);
+        return res.status(404).send({error: 'Wrong id, there is no category by that id!'});
     }
-
     res.send(category);
 });
 
 categoriesRouter.delete('/:id', async (req, res) => {
     const categories = await fileDb.removeCategoryById(req.params.id);
     res.send(categories);
-})
+});
 
 export default categoriesRouter;

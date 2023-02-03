@@ -14,13 +14,16 @@ export interface Place {
 
 export type ApiPlace = Omit<Place, 'description'>;
 
-export interface Item {
+export interface ApiItem {
     id: string;
     category_id: string;
     place_id: string;
     name: string;
+}
+
+export interface Item extends ApiItem{
     description: string;
-    image: string;
+    image: string | null;
 }
 
 export interface Shop {

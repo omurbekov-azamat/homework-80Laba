@@ -42,7 +42,7 @@ placesRouter.get('/:id', async (req, res) => {
     const place = places.find(place => place.id === req.params.id);
 
     if (!place) {
-        return res.sendStatus(404);
+        return res.status(404).send({error: 'Wrong id, there is no place by that id!'});
     }
 
     res.send(place);
@@ -50,6 +50,7 @@ placesRouter.get('/:id', async (req, res) => {
 
 placesRouter.delete('/:id', async (req, res) => {
     const places = await fileDb.deletePlaceById(req.params.id);
+    console.log(req.params.id)
     res.send(places);
 });
 
